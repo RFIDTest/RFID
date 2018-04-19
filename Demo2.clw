@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CBlockEdit
+LastClass=CWallet
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "Demo2.h"
@@ -13,13 +13,13 @@ Class2=CDemo2Dlg
 Class3=CAboutDlg
 
 ResourceCount=6
-Resource1=IDD_KeyInput
+Resource1=IDD_DEMO2_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_ABOUTBOX
+Resource3=IDD_Wallet
 Class4=CReadCard
 Resource4=IDD_ReadCard
-Class5=CKeyInput
-Resource5=IDD_DEMO2_DIALOG
+Class5=CWallet
+Resource5=IDD_ABOUTBOX
 Class6=CBlockEdit
 Resource6=IDD_BlockEdit
 
@@ -80,44 +80,13 @@ Filter=D
 LastObject=CReadCard
 VirtualFilter=dWC
 
-[DLG:IDD_KeyInput]
-Type=1
-Class=CKeyInput
-ControlCount=27
-Control1=IDC_STATIC,button,1342177287
-Control2=IDC_RADIO1,button,1342177289
-Control3=IDC_RADIO2,button,1342177289
-Control4=IDC_STATIC,static,1342308352
-Control5=IDC_EDIT1,edit,1350631552
-Control6=IDC_BUTTON1,button,1342242816
-Control7=IDC_STATIC,button,1342177287
-Control8=IDC_COMBO1,combobox,1344340226
-Control9=IDC_STATIC,static,1342308352
-Control10=IDC_STATIC,static,1342308352
-Control11=IDC_COMBO2,combobox,1344340226
-Control12=IDC_STATIC,static,1342308352
-Control13=IDC_EDIT3,edit,1350631552
-Control14=IDC_BUTTON3,button,1342242816
-Control15=IDC_BUTTON4,button,1342242816
-Control16=IDC_STATIC,static,1342308352
-Control17=IDC_EDIT4,edit,1350631552
-Control18=IDC_STATIC,static,1342308352
-Control19=IDC_EDIT5,edit,1350631552
-Control20=IDC_STATIC,static,1342308352
-Control21=IDC_EDIT6,edit,1484849280
-Control22=IDC_BUTTON5,button,1342242816
-Control23=IDC_BUTTON6,button,1342242816
-Control24=IDC_STATIC,button,1342177287
-Control25=IDC_EDIT2,edit,1352728644
-Control26=IDC_BUTTON7,button,1342242816
-Control27=IDC_BUTTON8,button,1342242816
-
-[CLS:CKeyInput]
+[CLS:CWallet]
 Type=0
-HeaderFile=KeyInput.h
-ImplementationFile=KeyInput.cpp
+HeaderFile=Wallet.h
+ImplementationFile=Wallet.cpp
 BaseClass=CDialog
 Filter=D
+LastObject=CWallet
 
 [DLG:IDD_BlockEdit]
 Type=1
@@ -155,4 +124,36 @@ ImplementationFile=BlockEdit.cpp
 BaseClass=CDialog
 Filter=D
 LastObject=IDC_RADIO2
+
+[DLG:IDD_Wallet]
+Type=1
+Class=CWallet
+ControlCount=27
+Control1=IDC_STATIC,button,1342177287
+Control2=IDC_RADIO1,button,1342177289
+Control3=IDC_RADIO2,button,1342177289
+Control4=IDC_STATIC,static,1342308352
+Control5=IDC_EDIT1,edit,1350631552
+Control6=IDC_BUTTON1,button,1342242816
+Control7=IDC_STATIC,button,1342177287
+Control8=IDC_COMBO1,combobox,1344340226
+Control9=IDC_STATIC,static,1342308352
+Control10=IDC_STATIC,static,1342308352
+Control11=IDC_COMBO2,combobox,1344340226
+Control12=IDC_STATIC,static,1342308352
+Control13=IDC_EDIT3,edit,1350631552
+Control14=IDC_BUTTON3,button,1342242816
+Control15=IDC_BUTTON4,button,1342242816
+Control16=IDC_STATIC,static,1342308352
+Control17=IDC_EDIT4,edit,1350631552
+Control18=IDC_STATIC,static,1342308352
+Control19=IDC_EDIT5,edit,1350631552
+Control20=IDC_STATIC,static,1342308352
+Control21=IDC_EDIT6,edit,1484849280
+Control22=IDC_BUTTON5,button,1342242816
+Control23=IDC_BUTTON6,button,1342242816
+Control24=IDC_STATIC,button,1342177287
+Control25=IDC_EDIT2,edit,1352728644
+Control26=IDC_BUTTON7,button,1342242816
+Control27=IDC_BUTTON8,button,1342242816
 

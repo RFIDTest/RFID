@@ -107,7 +107,7 @@ SOURCE=.\Demo2Dlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\KeyInput.cpp
+SOURCE=.\Wallet.cpp
 # End Source File
 # Begin Source File
 
@@ -144,7 +144,7 @@ SOURCE=.\Demo2Dlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\KeyInput.h
+SOURCE=.\Wallet.h
 # End Source File
 # Begin Source File
 

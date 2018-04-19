@@ -8,7 +8,7 @@
 #define IDD_DEMO2_DIALOG                102
 #define IDR_MAINFRAME                   128
 #define IDD_ReadCard                    129
-#define IDD_KeyInput                    131
+#define IDD_Wallet                      131
 #define IDD_BlockEdit                   133
 #define IDC_TAB1                        1000
 #define IDC_EDIT1                       1001

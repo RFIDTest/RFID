@@ -123,7 +123,7 @@ BOOL CDemo2Dlg::OnInitDialog()
 	m_MainMenu.InsertItem(1,"µç×ÓÇ®°ü");
 	m_MainMenu.InsertItem(2,"¶ÁÐ´¿¨Æ¬");
 	m_ReadCard.Create(IDD_ReadCard, GetDlgItem(IDC_TAB1));
-	m_KeyInput.Create(IDD_KeyInput, GetDlgItem(IDC_TAB1));
+	m_Wallet.Create(IDD_Wallet, GetDlgItem(IDC_TAB1));
 	m_BlockEdit.Create(IDD_BlockEdit, GetDlgItem(IDC_TAB1));
 
 	CRect rect;
@@ -134,11 +134,11 @@ BOOL CDemo2Dlg::OnInitDialog()
 	rect.left +=5;
 
 	m_ReadCard.MoveWindow(&rect);
-	m_KeyInput.MoveWindow(&rect);
+	m_Wallet.MoveWindow(&rect);
 	m_BlockEdit.MoveWindow(&rect);
 
 	m_ReadCard.ShowWindow(true);
-	m_KeyInput.ShowWindow(false);
+	m_Wallet.ShowWindow(false);
 	m_BlockEdit.ShowWindow(false);
 	m_MainMenu.SetCurSel(0);
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -202,17 +202,17 @@ void CDemo2Dlg::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 	switch(cursel){
 	case 0:
 		m_ReadCard.ShowWindow(true);
-		m_KeyInput.ShowWindow(false);
+		m_Wallet.ShowWindow(false);
 		m_BlockEdit.ShowWindow(false);
 		break;
 	case 1:
 		m_ReadCard.ShowWindow(false);
-		m_KeyInput.ShowWindow(true);
+		m_Wallet.ShowWindow(true);
 		m_BlockEdit.ShowWindow(false);
 		break;
 	case 2:
 		m_ReadCard.ShowWindow(false);
-		m_KeyInput.ShowWindow(false);
+		m_Wallet.ShowWindow(false);
 		m_BlockEdit.ShowWindow(true);
 		break;
 	default:

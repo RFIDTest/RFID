@@ -5,7 +5,7 @@
 #define AFX_DEMO2DLG_H__DEAF6F13_A8A2_439F_9548_ED89DCBFB406__INCLUDED_
 
 #include "ReadCard.h"
-#include "KeyInput.h"
+#include "Wallet.h"
 #include "BlockEdit.h"
 #include "ZM124U.h"
 
@@ -22,7 +22,7 @@ class CDemo2Dlg : public CDialog
 public:
 	CDemo2Dlg(CWnd* pParent = NULL);	// standard constructor
 	CReadCard m_ReadCard;
-	CKeyInput m_KeyInput;
+	CWallet m_Wallet;
 	CBlockEdit m_BlockEdit;
 // Dialog Data
 	//{{AFX_DATA(CDemo2Dlg)

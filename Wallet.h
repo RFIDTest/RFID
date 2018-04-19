@@ -1,31 +1,31 @@
-#if !defined(AFX_KEYINPUT_H__73F5A4FC_370E_4836_A2A7_CD5D9E0DB5E5__INCLUDED_)
-#define AFX_KEYINPUT_H__73F5A4FC_370E_4836_A2A7_CD5D9E0DB5E5__INCLUDED_
+#if !defined(AFX_Wallet_H__73F5A4FC_370E_4836_A2A7_CD5D9E0DB5E5__INCLUDED_)
+#define AFX_Wallet_H__73F5A4FC_370E_4836_A2A7_CD5D9E0DB5E5__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-// KeyInput.h : header file
+// Wallet.h : header file
 //
 
 /////////////////////////////////////////////////////////////////////////////
-// CKeyInput dialog
+// CWallet dialog
 
-class CKeyInput : public CDialog
+class CWallet : public CDialog
 {
 // Construction
 public:
-	CKeyInput(CWnd* pParent = NULL);   // standard constructor
+	CWallet(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(CKeyInput)
-	enum { IDD = IDD_KeyInput };
+	//{{AFX_DATA(CWallet)
+	enum { IDD = IDD_Wallet };
 		// NOTE: the ClassWizard will add data members here
 	//}}AFX_DATA
 
 
 // Overrides
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CKeyInput)
+	//{{AFX_VIRTUAL(CWallet)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
@@ -34,7 +34,7 @@ public:
 protected:
 
 	// Generated message map functions
-	//{{AFX_MSG(CKeyInput)
+	//{{AFX_MSG(CWallet)
 		// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -43,4 +43,4 @@ protected:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_KEYINPUT_H__73F5A4FC_370E_4836_A2A7_CD5D9E0DB5E5__INCLUDED_)
+#endif // !defined(AFX_Wallet_H__73F5A4FC_370E_4836_A2A7_CD5D9E0DB5E5__INCLUDED_)
