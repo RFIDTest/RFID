@@ -107,7 +107,11 @@ SOURCE=.\Demo2Dlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Wallet.cpp
+SOURCE=.\Notice.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=C:\Program
 # End Source File
 # Begin Source File
 
@@ -120,7 +124,7 @@ SOURCE=.\StdAfx.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\VC98\MFC\SRC\WINMAIN.CPP
+SOURCE=.\Wallet.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -144,7 +148,7 @@ SOURCE=.\Demo2Dlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Wallet.h
+SOURCE=.\Notice.h
 # End Source File
 # Begin Source File
 
@@ -157,6 +161,10 @@ SOURCE=.\Resource.h
 # Begin Source File
 
 SOURCE=.\StdAfx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wallet.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

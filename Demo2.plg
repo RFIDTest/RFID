@@ -6,35 +6,28 @@
 --------------------Configuration: Demo2 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Debug/Demo2.res" /d "_DEBUG" /d "_AFXDLL" "D:\Program Files (x86)\Microsoft Visual Studio\MyProjects\Demo2\Demo2.rc"" 
-Creating temporary file "C:\Users\Jy\AppData\Local\Temp\RSP8C94.tmp" with contents
+Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPF6CA.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/Demo2.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"D:\Program Files (x86)\Microsoft Visual Studio\MyProjects\Demo2\Demo2.cpp"
-"D:\Program Files (x86)\Microsoft Visual Studio\MyProjects\Demo2\Demo2Dlg.cpp"
-"D:\Program Files (x86)\Microsoft Visual Studio\MyProjects\Demo2\Wallet.cpp"
+"C:\Users\24707\Desktop\RFID\RFID\Notice.cpp"
 ]
-Creating command line "cl.exe @C:\Users\Jy\AppData\Local\Temp\RSP8C94.tmp" 
-Creating temporary file "C:\Users\Jy\AppData\Local\Temp\RSP8C95.tmp" with contents
+Creating command line "cl.exe @C:\Users\24707\AppData\Local\Temp\RSPF6CA.tmp" 
+Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPF6CB.tmp" with contents
 [
 ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Demo2.pdb" /debug /machine:I386 /out:"Debug/Demo2.exe" /pdbtype:sept /libpath:"./libs" 
-".\Debug\BlockEdit.obj"
-".\Debug\Demo2.obj"
-".\Debug\Demo2Dlg.obj"
-".\Debug\Wallet.obj"
-".\Debug\ReadCard.obj"
-".\Debug\StdAfx.obj"
-".\Debug\WINMAIN.OBJ"
-".\Debug\Demo2.res"
+.\Debug\BlockEdit.obj
+.\Debug\Demo2.obj
+.\Debug\Demo2Dlg.obj
+.\Debug\Notice.obj
+.\Debug\ReadCard.obj
+.\Debug\StdAfx.obj
+.\Debug\Wallet.obj
+.\Debug\Demo2.res
 ]
-Creating command line "link.exe @C:\Users\Jy\AppData\Local\Temp\RSP8C95.tmp"
+Creating command line "link.exe @C:\Users\24707\AppData\Local\Temp\RSPF6CB.tmp"
 <h3>Output Window</h3>
-Compiling resources...
 Compiling...
-Demo2.cpp
-Demo2Dlg.cpp
-Wallet.cpp
-Generating Code...
+Notice.cpp
 Linking...
 
 
