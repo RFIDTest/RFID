@@ -4,12 +4,17 @@
 #include "stdafx.h"
 #include "Demo2.h"
 #include "Wallet.h"
+#include "ZM124U.h"
+
+#include "Notice.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CWallet dialog
@@ -28,16 +33,204 @@ void CWallet::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWallet)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	DDX_Control(pDX, IDC_EDIT_key, m_walletKey);
 	//}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CWallet, CDialog)
 	//{{AFX_MSG_MAP(CWallet)
-		// NOTE: the ClassWizard will add message map macros here
+	ON_BN_CLICKED(IDC_BUTTON_walletInit, OnBUTTONwalletInit)
+	ON_BN_CLICKED(IDC_BUTTON_defualtKey, OnBUTTONdefualtKey)
+	ON_BN_CLICKED(IDC_BUTTON_balanceInquiry, OnBUTTONbalanceInquiry)
+	ON_BN_CLICKED(IDC_BUTTON_rechange, OnBUTTONrechange)
+	ON_BN_CLICKED(IDC_BUTTON_deduction, OnBUTTONdeduction)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CWallet message handlers
+
+void CWallet::OnBUTTONwalletInit() 
+{
+	// TODO: Add your control notification handler code here
+
+	//获取page和block
+	CString tmp;
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	int page = _ttoi(tmp);
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	int block = _ttoi(tmp);
+	//获取page和block
+
+	//输入检查
+	CString amountCStr;
+	GetDlgItem(IDC_EDIT_balance)->GetWindowText(amountCStr);
+	if(amountCStr.IsEmpty()) {
+		// 输入为空
+		Notice n("请输入初始化金额！","Warnning!");
+		return;
+	}
+	long amount = _ttol(amountCStr);
+	if(amount < 0) {
+		// 输入小于0
+		Notice n("初始化金额不能小于0！","Warnning!");
+		return;
+	}
+	//输入检查
+
+	//密码类型处理
+	unsigned char pwdType;
+	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
+	else pwdType = 0x0B;
+	//密码类型处理
+
+	//获取密码
+	CString pwdCStr;
+	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
+	unsigned char* pwdCH = (unsigned char*)(LPCSTR)pwdCStr;
+	//获取密码
+
+	
+
+	int code = write_account(page, block, pwdType, pwdCH, amount);
+	Notice n(code);
+	
+
+}
+
+void CWallet::OnBUTTONdefualtKey() 
+{
+	// TODO: Add your control notification handler code here
+	m_walletKey.SetWindowText("FFFFFFFFFFFF");
+	return ;
+}
+
+void CWallet::OnBUTTONbalanceInquiry() 
+{
+	// TODO: Add your control notification handler code here
+
+	//获取page和block
+	CString tmp;
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	int page = _ttoi(tmp);
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	int block = _ttoi(tmp);
+	//获取page和block
+
+	//密码类型处理
+	unsigned char pwdType;
+	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
+	else pwdType = 0x0B;
+	//密码类型处理
+
+	//获取密码
+	CString pwdCStr;
+	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
+	unsigned char* pwdCH = (unsigned char*)(LPCSTR)pwdCStr;
+	//获取密码
+
+	long balance=0;
+
+	int code = read_account(page, block, pwdType, pwdCH, &balance); 
+	Notice n(code);
+	CString balanceCStr;
+	balanceCStr.Format(_T("%d"), balance);
+	if(code==0) GetDlgItem(IDC_EDIT_balance)->SetWindowText(balanceCStr);
+
+}
+
+void CWallet::OnBUTTONrechange() 
+{
+	// TODO: Add your control notification handler code here
+	//获取page和block
+	CString tmp;
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	int page = _ttoi(tmp);
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	int block = _ttoi(tmp);
+	//获取page和block
+
+	//输入检查
+	CString amountCStr;
+	GetDlgItem(IDC_EDIT_balance)->GetWindowText(amountCStr);
+	if(amountCStr.IsEmpty()) {
+		// 输入为空
+		Notice n("请输入充值金额！","Warnning!");
+		return;
+	}
+	long amount = _ttol(amountCStr);
+	if(amount < 0) {
+		// 输入小于0
+		Notice n("充值金额不能小于0！","Warnning!");
+		return;
+	}
+	//输入检查
+
+	//密码类型处理
+	unsigned char pwdType;
+	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
+	else pwdType = 0x0B;
+	//密码类型处理
+
+	//获取密码
+	CString pwdCStr;
+	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
+	unsigned char* pwdCH = (unsigned char*)(LPCSTR)pwdCStr;
+	//获取密码
+
+	int code = add_account(page, block, pwdType, pwdCH, amount);
+	Notice n(code);
+}
+
+void CWallet::OnBUTTONdeduction() 
+{
+	// TODO: Add your control notification handler code here
+	//获取page和block
+	CString tmp;
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	int page = _ttoi(tmp);
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	int block = _ttoi(tmp);
+	//获取page和block
+
+	//输入检查
+	CString amountCStr;
+	GetDlgItem(IDC_EDIT_balance)->GetWindowText(amountCStr);
+	if(amountCStr.IsEmpty()) {
+		// 输入为空
+		Notice n("请输入消费金额！","Warnning!");
+		return;
+	}
+	long amount = _ttol(amountCStr);
+	if(amount < 0) {
+		// 输入小于0
+		Notice n("消费金额不能小于0！","Warnning!");
+		return;
+	}
+	//输入检查
+
+
+
+	//密码类型处理
+	unsigned char pwdType;
+	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
+	else pwdType = 0x0B;
+	//密码类型处理
+
+	//获取密码
+	CString pwdCStr;
+	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
+	unsigned char* pwdCH = (unsigned char*)(LPCSTR)pwdCStr;
+	//获取密码
+
+	long balance=0;
+	Notice n(read_account(page, block, pwdType, pwdCH, &balance));
+	if(balance<amount)
+	{
+		Notice n("余额不足，请充值。","Warnning!");
+		return ;
+	}
+	int code = add_account(page, block, pwdType, pwdCH, amount);
+	Notice notice(code);
+}

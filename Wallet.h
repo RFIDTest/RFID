@@ -19,7 +19,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CWallet)
 	enum { IDD = IDD_Wallet };
-		// NOTE: the ClassWizard will add data members here
+	CEdit	m_walletKey;
 	//}}AFX_DATA
 
 
@@ -35,7 +35,11 @@ protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(CWallet)
-		// NOTE: the ClassWizard will add member functions here
+	afx_msg void OnBUTTONwalletInit();
+	afx_msg void OnBUTTONdefualtKey();
+	afx_msg void OnBUTTONbalanceInquiry();
+	afx_msg void OnBUTTONrechange();
+	afx_msg void OnBUTTONdeduction();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
