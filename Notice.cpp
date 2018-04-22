@@ -23,7 +23,7 @@ Notice::Notice(int code)
 	
 	switch(code){
 	case 0:
-		MessageBox("操作成功","Succeeded");
+		//MessageBox("操作成功","Succeeded");
 		data = (char*)"00";
 		break;
 	case -1:

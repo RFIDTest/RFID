@@ -35,7 +35,10 @@ protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(CBlockEdit)
-		// NOTE: the ClassWizard will add member functions here
+	afx_msg void OnBUTTONdefualtKeyB();
+	afx_msg void OnBUTTONreadBlock();
+	afx_msg void OnBUTTONreadPage();
+	afx_msg void OnBUTTONwriteBlock();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
