@@ -51,6 +51,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CWallet message handlers
 
+//初始化函数
 void CWallet::OnBUTTONwalletInit() 
 {
 	// TODO: Add your control notification handler code here
@@ -59,7 +60,7 @@ void CWallet::OnBUTTONwalletInit()
 	CString tmp;
 	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
 	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
 	int block = _ttoi(tmp);
 	//获取page和block
 
@@ -69,12 +70,14 @@ void CWallet::OnBUTTONwalletInit()
 	if(amountCStr.IsEmpty()) {
 		// 输入为空
 		Notice n("请输入初始化金额！","Warnning!");
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包失败！");
 		return;
 	}
 	long amount = _ttol(amountCStr);
 	if(amount < 0) {
 		// 输入小于0
 		Notice n("初始化金额不能小于0！","Warnning!");
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包失败！");
 		return;
 	}
 	//输入检查
@@ -88,17 +91,37 @@ void CWallet::OnBUTTONwalletInit()
 	//获取密码
 	CString pwdCStr;
 	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
-	unsigned char* pwdCH = (unsigned char*)(LPCSTR)pwdCStr;
+	pwdCStr.MakeUpper();
+	unsigned char pwdCH[12];
+
+	int len=pwdCStr.GetLength();
+
+	for(int i=0;i<len;i++)
+	{
+		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
+		else 
+		{
+			char x=pwdCStr[i];
+			pwdCH[i]=(unsigned char)atoi(&x);
+		}
+	}
+
+	for(int j=0;j<len/2;j++)
+	{
+		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
+	}
 	//获取密码
 
 	
 
 	int code = write_account(page, block, pwdType, pwdCH, amount);
 	Notice n(code);
-	
+	if(code==0)GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包成功！");
+	else GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包失败！");
 
 }
 
+//默认密码
 void CWallet::OnBUTTONdefualtKey() 
 {
 	// TODO: Add your control notification handler code here
@@ -106,6 +129,7 @@ void CWallet::OnBUTTONdefualtKey()
 	return ;
 }
 
+//查询
 void CWallet::OnBUTTONbalanceInquiry() 
 {
 	// TODO: Add your control notification handler code here
@@ -114,7 +138,7 @@ void CWallet::OnBUTTONbalanceInquiry()
 	CString tmp;
 	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
 	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
 	int block = _ttoi(tmp);
 	//获取page和block
 
@@ -127,7 +151,25 @@ void CWallet::OnBUTTONbalanceInquiry()
 	//获取密码
 	CString pwdCStr;
 	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
-	unsigned char* pwdCH = (unsigned char*)(LPCSTR)pwdCStr;
+	pwdCStr.MakeUpper();
+	unsigned char pwdCH[12];
+
+	int len=pwdCStr.GetLength();
+
+	for(int i=0;i<len;i++)
+	{
+		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
+		else 
+		{
+			char x=pwdCStr[i];
+			pwdCH[i]=(unsigned char)atoi(&x);
+		}
+	}
+
+	for(int j=0;j<len/2;j++)
+	{
+		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
+	}
 	//获取密码
 
 	long balance=0;
@@ -136,10 +178,16 @@ void CWallet::OnBUTTONbalanceInquiry()
 	Notice n(code);
 	CString balanceCStr;
 	balanceCStr.Format(_T("%d"), balance);
-	if(code==0) GetDlgItem(IDC_EDIT_balance)->SetWindowText(balanceCStr);
+	if(code==0) 
+	{
+		GetDlgItem(IDC_EDIT_balance)->SetWindowText(balanceCStr);
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("查询成功！");
+	}
+	else GetDlgItem(IDC_EDIT_state)->SetWindowText("查询失败！");
 
 }
 
+//充值
 void CWallet::OnBUTTONrechange() 
 {
 	// TODO: Add your control notification handler code here
@@ -147,22 +195,24 @@ void CWallet::OnBUTTONrechange()
 	CString tmp;
 	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
 	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
 	int block = _ttoi(tmp);
 	//获取page和block
 
 	//输入检查
 	CString amountCStr;
-	GetDlgItem(IDC_EDIT_balance)->GetWindowText(amountCStr);
+	GetDlgItem(IDC_EDIT_rechange)->GetWindowText(amountCStr);
 	if(amountCStr.IsEmpty()) {
 		// 输入为空
 		Notice n("请输入充值金额！","Warnning!");
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("充值失败！");
 		return;
 	}
 	long amount = _ttol(amountCStr);
 	if(amount < 0) {
 		// 输入小于0
 		Notice n("充值金额不能小于0！","Warnning!");
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("充值失败！");
 		return;
 	}
 	//输入检查
@@ -176,13 +226,39 @@ void CWallet::OnBUTTONrechange()
 	//获取密码
 	CString pwdCStr;
 	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
-	unsigned char* pwdCH = (unsigned char*)(LPCSTR)pwdCStr;
+	pwdCStr.MakeUpper();
+	unsigned char pwdCH[12];
+
+	int len=pwdCStr.GetLength();
+
+	for(int i=0;i<len;i++)
+	{
+		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
+		else 
+		{
+			char x=pwdCStr[i];
+			pwdCH[i]=(unsigned char)atoi(&x);
+		}
+	}
+
+	for(int j=0;j<len/2;j++)
+	{
+		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
+	}
+	//int asc_len;
+	//HexCString2UnsignedCharStar(pwdCStr, pwdCH, &asc_len);
 	//获取密码
 
 	int code = add_account(page, block, pwdType, pwdCH, amount);
 	Notice n(code);
+	if(code==0) 
+	{
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("充值成功！");
+	}
+	else GetDlgItem(IDC_EDIT_state)->SetWindowText("充值失败！");
 }
 
+//消费
 void CWallet::OnBUTTONdeduction() 
 {
 	// TODO: Add your control notification handler code here
@@ -190,22 +266,24 @@ void CWallet::OnBUTTONdeduction()
 	CString tmp;
 	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
 	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
 	int block = _ttoi(tmp);
 	//获取page和block
 
 	//输入检查
 	CString amountCStr;
-	GetDlgItem(IDC_EDIT_balance)->GetWindowText(amountCStr);
+	GetDlgItem(IDC_EDIT_deduction)->GetWindowText(amountCStr);
 	if(amountCStr.IsEmpty()) {
 		// 输入为空
 		Notice n("请输入消费金额！","Warnning!");
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("消费失败！");
 		return;
 	}
 	long amount = _ttol(amountCStr);
 	if(amount < 0) {
 		// 输入小于0
 		Notice n("消费金额不能小于0！","Warnning!");
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("消费失败！");
 		return;
 	}
 	//输入检查
@@ -221,16 +299,42 @@ void CWallet::OnBUTTONdeduction()
 	//获取密码
 	CString pwdCStr;
 	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
-	unsigned char* pwdCH = (unsigned char*)(LPCSTR)pwdCStr;
+	pwdCStr.MakeUpper();
+	unsigned char pwdCH[12];
+
+	int len=pwdCStr.GetLength();
+
+	for(int i=0;i<len;i++)
+	{
+		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
+		else 
+		{
+			char x=pwdCStr[i];
+			pwdCH[i]=(unsigned char)atoi(&x);
+		}
+	}
+
+	for(int j=0;j<len/2;j++)
+	{
+		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
+	}
+	//int asc_len;
+	//HexCString2UnsignedCharStar(pwdCStr, pwdCH, &asc_len);
 	//获取密码
 
 	long balance=0;
-	Notice n(read_account(page, block, pwdType, pwdCH, &balance));
+	read_account(page, block, pwdType, pwdCH, &balance);
 	if(balance<amount)
 	{
 		Notice n("余额不足，请充值。","Warnning!");
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("消费失败！");
 		return ;
 	}
-	int code = add_account(page, block, pwdType, pwdCH, amount);
+	int code = sub_account(page, block, pwdType, pwdCH, amount);
 	Notice notice(code);
+	if(code==0) 
+	{
+		GetDlgItem(IDC_EDIT_state)->SetWindowText("消费成功！");
+	}
+	else GetDlgItem(IDC_EDIT_state)->SetWindowText("消费失败！");
 }

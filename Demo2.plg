@@ -6,13 +6,13 @@
 --------------------Configuration: Demo2 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPF6CA.tmp" with contents
+Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPC3AF.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/Demo2.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\Users\24707\Desktop\RFID\RFID\Notice.cpp"
+"C:\Users\24707\Desktop\RFID\RFID\Wallet.cpp"
 ]
-Creating command line "cl.exe @C:\Users\24707\AppData\Local\Temp\RSPF6CA.tmp" 
-Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPF6CB.tmp" with contents
+Creating command line "cl.exe @C:\Users\24707\AppData\Local\Temp\RSPC3AF.tmp" 
+Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPC3B0.tmp" with contents
 [
 ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Demo2.pdb" /debug /machine:I386 /out:"Debug/Demo2.exe" /pdbtype:sept /libpath:"./libs" 
 .\Debug\BlockEdit.obj
@@ -24,10 +24,10 @@ ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Demo2.pdb" /d
 .\Debug\Wallet.obj
 .\Debug\Demo2.res
 ]
-Creating command line "link.exe @C:\Users\24707\AppData\Local\Temp\RSPF6CB.tmp"
+Creating command line "link.exe @C:\Users\24707\AppData\Local\Temp\RSPC3B0.tmp"
 <h3>Output Window</h3>
 Compiling...
-Notice.cpp
+Wallet.cpp
 Linking...
 
 
