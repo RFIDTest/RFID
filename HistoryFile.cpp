@@ -1,0 +1,27 @@
+// HistoryFile.cpp: implementation of the HistoryFile class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "Demo2.h"
+#include "HistoryFile.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+HistoryFile::HistoryFile()
+{
+
+}
+
+HistoryFile::~HistoryFile()
+{
+
+}

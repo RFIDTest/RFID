@@ -1,27 +1,26 @@
-/*
-提示类
-在操作后弹出提示窗口
-*/
-
-#if !defined(AFX_NOTICE_H__034EFE19_E11B_4F51_81BB_17E155A6210F__INCLUDED_)
-#define AFX_NOTICE_H__034EFE19_E11B_4F51_81BB_17E155A6210F__INCLUDED_
+#if !defined(AFX_HISTORY_H__C2A96995_EC9F_4973_A005_453834F70C6C__INCLUDED_)
+#define AFX_HISTORY_H__C2A96995_EC9F_4973_A005_453834F70C6C__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-// Notice.h : header file
+// History.h : header file
 //
 
 /////////////////////////////////////////////////////////////////////////////
-// Notice window
+// History window
+enum WriteType
+{
+	INITIAL=0,RECHARGE,DEDUCTION
+};
 
-class Notice : public CWnd
+class History : public CWnd
 {
 // Construction
 public:
-	Notice(int code);//根据函数返回值进行提示
-	Notice(CString content,CString title="Error");//根据内容和标题进行提示
-
+	History();
+	static bool write(int page,int block,WriteType type,int amount);
+	static CString read();
 
 // Attributes
 public:
@@ -31,16 +30,16 @@ public:
 
 // Overrides
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(Notice)
+	//{{AFX_VIRTUAL(History)
 	//}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~Notice();
+	virtual ~History();
 
 	// Generated message map functions
 protected:
-	//{{AFX_MSG(Notice)
+	//{{AFX_MSG(History)
 		// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -51,4 +50,4 @@ protected:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_NOTICE_H__034EFE19_E11B_4F51_81BB_17E155A6210F__INCLUDED_)
+#endif // !defined(AFX_HISTORY_H__C2A96995_EC9F_4973_A005_453834F70C6C__INCLUDED_)

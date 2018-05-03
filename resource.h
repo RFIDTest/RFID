@@ -37,9 +37,11 @@
 #define IDC_EDIT5                       1017
 #define IDC_EDIT_deduction              1017
 #define IDC_BUTTON7                     1018
+#define IDC_BUTTON_cleraRecord          1018
 #define IDC_EDIT6                       1019
 #define IDC_EDIT_state                  1019
 #define IDC_BUTTON8                     1020
+#define IDC_BUTTON_historyIquiry        1020
 #define IDC_COMBO3                      1022
 #define IDC_COMBO_Block                 1022
 #define IDC_EDIT7                       1024

@@ -6,33 +6,21 @@
 --------------------Configuration: Demo2 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Debug/Demo2.res" /d "_DEBUG" /d "_AFXDLL" "C:\Users\24707\Desktop\RFID\RFID\Demo2.rc"" 
-Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPEC3D.tmp" with contents
-[
-/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/Demo2.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\Users\24707\Desktop\RFID\RFID\BlockEdit.cpp"
-"C:\Users\24707\Desktop\RFID\RFID\Notice.cpp"
-]
-Creating command line "cl.exe @C:\Users\24707\AppData\Local\Temp\RSPEC3D.tmp" 
-Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPEC3E.tmp" with contents
+Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPFF3B.tmp" with contents
 [
 ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Demo2.pdb" /debug /machine:I386 /out:"Debug/Demo2.exe" /pdbtype:sept /libpath:"./libs" 
 .\Debug\BlockEdit.obj
 .\Debug\Demo2.obj
 .\Debug\Demo2Dlg.obj
+.\Debug\History.obj
 .\Debug\Notice.obj
 .\Debug\ReadCard.obj
 .\Debug\StdAfx.obj
 .\Debug\Wallet.obj
 .\Debug\Demo2.res
 ]
-Creating command line "link.exe @C:\Users\24707\AppData\Local\Temp\RSPEC3E.tmp"
+Creating command line "link.exe @C:\Users\24707\AppData\Local\Temp\RSPFF3B.tmp"
 <h3>Output Window</h3>
-Compiling resources...
-Compiling...
-BlockEdit.cpp
-Notice.cpp
-Generating Code...
 Linking...
 
 

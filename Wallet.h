@@ -40,6 +40,8 @@ protected:
 	afx_msg void OnBUTTONbalanceInquiry();
 	afx_msg void OnBUTTONrechange();
 	afx_msg void OnBUTTONdeduction();
+	afx_msg void OnBUTTONcleraRecord();
+	afx_msg void OnBUTTONhistoryIquiry();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

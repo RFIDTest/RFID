@@ -107,6 +107,10 @@ SOURCE=.\Demo2Dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\History.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notice.cpp
 # End Source File
 # Begin Source File
@@ -145,6 +149,10 @@ SOURCE=.\Demo2.h
 # Begin Source File
 
 SOURCE=.\Demo2Dlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\History.h
 # End Source File
 # Begin Source File
 

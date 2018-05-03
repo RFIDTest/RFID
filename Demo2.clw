@@ -2,29 +2,31 @@
 
 [General Info]
 Version=1
-LastClass=CWallet
+LastClass=History
 LastTemplate=generic CWnd
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "Demo2.h"
 
-ClassCount=9
+ClassCount=11
 Class1=CDemo2App
 Class2=CDemo2Dlg
 Class3=CAboutDlg
 
 ResourceCount=7
-Resource1=IDD_Wallet
+Resource1=IDD_BlockEdit
 Resource2=IDR_MAINFRAME
 Resource3=IDD_ReadCard
 Class4=CReadCard
 Resource4=IDD_ABOUTBOX
 Class5=CWallet
-Resource5=IDD_DEMO2_DIALOG
+Resource5=IDD_Wallet
 Class6=CBlockEdit
-Resource6=IDD_BlockEdit
+Resource6=IDD_DEMO2_DIALOG
 Class7=ErrorTable
 Class8=Error
 Class9=Notice
+Class10=HistoryRecord
+Class11=History
 Resource7=IDD_DIALOG1
 
 [CLS:CDemo2App]
@@ -115,7 +117,7 @@ Control15=IDC_EDIT_block1,edit,1350631552
 Control16=IDC_STATIC,static,1342308352
 Control17=IDC_EDIT_block2,edit,1350631552
 Control18=IDC_STATIC,static,1342308352
-Control19=IDC_EDIT_block3a,edit,1484849280
+Control19=IDC_EDIT_block3a,edit,1350631552
 Control20=IDC_EDIT_block3b,edit,1484849280
 Control21=IDC_EDIT_block3c,edit,1484849280
 Control22=IDC_BUTTON_readPage,button,1342242816
@@ -160,8 +162,8 @@ Control22=IDC_BUTTON_balanceInquiry,button,1342242816
 Control23=IDC_BUTTON_deduction,button,1342242816
 Control24=IDC_STATIC,button,1342177287
 Control25=IDC_EDIT_history,edit,1352728644
-Control26=IDC_BUTTON7,button,1342242816
-Control27=IDC_BUTTON8,button,1342242816
+Control26=IDC_BUTTON_cleraRecord,button,1342242816
+Control27=IDC_BUTTON_historyIquiry,button,1342242816
 
 [DLG:IDD_DIALOG1]
 Type=1
@@ -188,6 +190,20 @@ Filter=C
 Type=0
 HeaderFile=Notice.h
 ImplementationFile=Notice.cpp
+BaseClass=generic CWnd
+Filter=W
+
+[CLS:HistoryRecord]
+Type=0
+HeaderFile=HistoryRecord.h
+ImplementationFile=HistoryRecord.cpp
+BaseClass=CFileDialog
+Filter=D
+
+[CLS:History]
+Type=0
+HeaderFile=History.h
+ImplementationFile=History.cpp
 BaseClass=generic CWnd
 Filter=W
 

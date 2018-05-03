@@ -90,7 +90,7 @@ void CBlockEdit::OnBUTTONreadBlock()
 		}
 	}
 
-	for(int j=0;j<len/2;j++)
+	for(int j=0;j<(len+1)/2;j++)
 	{
 		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
 	}
@@ -180,7 +180,7 @@ void CBlockEdit::OnBUTTONreadPage()
 		}
 	}
 
-	for(int j=0;j<len/2;j++)
+	for(int j=0;j<(len+1)/2;j++)
 	{
 		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
 	}
@@ -189,7 +189,7 @@ void CBlockEdit::OnBUTTONreadPage()
 	
 	for(block=0;block<4;block++)
 	{
-		unsigned char des_data[12];
+		unsigned char des_data[16];
 		int des_len=0;
 		int code = read_block(page,block, pwdType, pwdCH,des_data, &des_len);
 		if(code!=0)
@@ -260,7 +260,7 @@ void CBlockEdit::OnBUTTONwriteBlock()
 		}
 	}
 
-	for(int j=0;j<len/2;j++)
+	for(int j=0;j<(len+1)/2;j++)
 	{
 		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
 	}
@@ -283,31 +283,63 @@ void CBlockEdit::OnBUTTONwriteBlock()
 		GetDlgItem(IDC_EDIT_block2)->GetWindowText(src_dataCStr);
 		break;
 	case 3:
-		Notice WRANNING("块3不允许修改","WRANNING");
-		return ;
+		GetDlgItem(IDC_EDIT_block3a)->GetWindowText(src_dataCStr);
+		break ;
 		
 	}
 
 	src_dataCStr.MakeUpper();
-	unsigned char src_data[32];
 	
+	unsigned char src_data[32];
 	int len_src_CStr=src_dataCStr.GetLength();
-	int src_len=len_src_CStr/2;
-	for(int ii=0;ii<len_src_CStr;ii++)
+	int src_len=(len_src_CStr+1)/2;
+	if(block==3)
 	{
-		if(src_dataCStr[ii]>0x40) src_data[ii]=(unsigned char)src_dataCStr[ii]-0x37;
-		else 
+		unsigned char des_data[16];
+		int des_len=0;
+		int code = read_block(page,block, pwdType, pwdCH,des_data, &des_len);
+		Notice c(code);
+		code = write_block(block,page,pwdType,pwdCH,des_data,des_len);
+		Notice d(code);
+
+/*		unsigned char des_data[16];
+		int des_len=0;	
+		read_block(page,block, pwdType, pwdCH,src_data, &des_len);
+		
+		unsigned char tmp[12];
+		for(int a=0;a<len_src_CStr;a++)
 		{
-			char x=src_dataCStr[ii];
-			src_data[ii]=(unsigned char)atoi(&x);
+			if(src_dataCStr[a]>0x40) tmp[a]=(unsigned char)src_dataCStr[a]-0x37;
+			else 
+			{
+				char y=src_dataCStr[a];
+				tmp[a]=(unsigned char)atoi(&y);
+			}
+		}
+		for(int b=0;b<src_len;b++)
+		{
+			src_data[10+b]=(unsigned char)(tmp[2*b]<<4)+(unsigned char)(tmp[2*b+1]);
+		}
+		src_len+=10;*/
+	}
+	else
+	{
+		for(int ii=0;ii<len_src_CStr;ii++)
+		{
+			if(src_dataCStr[ii]>0x40) src_data[ii]=(unsigned char)src_dataCStr[ii]-0x37;
+			else 
+			{
+				char x=src_dataCStr[ii];
+				src_data[ii]=(unsigned char)atoi(&x);
+			}
+		}
+
+		for(int jj=0;jj<(len_src_CStr+1)/2;jj++)
+		{
+			src_data[jj]=(unsigned char)(src_data[2*jj]<<4)+(unsigned char)(src_data[2*jj+1]);
 		}
 	}
-
-	for(int jj=0;jj<len_src_CStr/2;jj++)
-	{
-		src_data[jj]=(unsigned char)(src_data[2*jj]<<4)+(unsigned char)(src_data[2*jj+1]);
-	}
 	//获取写入内容和长度
-	int code = write_block(block,page,pwdType,pwdCH,src_data,src_len); 
-	Notice n(code);
+	//int code = write_block(block,page,pwdType,pwdCH,src_data,src_len); 
+	//Notice n(code);
 }
