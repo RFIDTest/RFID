@@ -128,6 +128,10 @@ SOURCE=.\StdAfx.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\StringHelper.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Wallet.cpp
 # End Source File
 # End Group
@@ -169,6 +173,10 @@ SOURCE=.\Resource.h
 # Begin Source File
 
 SOURCE=.\StdAfx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringHelper.h
 # End Source File
 # Begin Source File
 

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Demo2.h"
 #include "ReadCard.h"
+#include "StringHelper.h"
 #include "ZM124U.h"
 
 #ifdef _DEBUG
@@ -63,19 +64,11 @@ void CReadCard::OnButton1()
 void CReadCard::OnButton2() 
 {
 	// TODO: Add your control notification handler code here
-	//CString uid, temp;
-	CString temp, uid;
-	unsigned char buff[1024];
-	int buff_len;
-
-	if (find_14443(buff, &buff_len) == 0){
-		uid.Empty();
-		for(int i = 0; i <buff_len; i++) {
-		  // 将获得的UID数据（1 byte）转为16进制
-	 		temp.Format(_T("%02x"), buff[i]);
-    		uid += temp;
-		}
-		//((CEdit*)GetDlgItem(IDC_EDIT2))->SetWindowText(_T(uid));
+	
+	CString uid;
+	
+	if (StringHelper::GetUIDCStr(uid))
+	{
 		m_Status.SetWindowText(_T("寻卡成功"));
 		m_Uid.SetWindowText(_T(uid));
 	}
@@ -83,4 +76,5 @@ void CReadCard::OnButton2()
 		m_Status.SetWindowText(_T("寻卡失败"));
 		m_Uid.SetWindowText(_T(""));
 	}
+
 }

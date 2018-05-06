@@ -5,6 +5,7 @@
 #include "ZM124U.h"
 #include "Demo2.h"
 #include "History.h"
+#include "StringHelper.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -15,6 +16,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // History
 
+const CString HISTORYFILE="history.txt";
 History::History()
 {
 }
@@ -25,31 +27,23 @@ History::~History()
 bool History::write(int page,int block,WriteType type,int amount)
 {
 	CFile file;
-	int i = file.Open("history.txt", CFile::modeCreate|CFile::modeNoTruncate|CFile::modeReadWrite);
-	if(i==0) return false;
+	int i = file.Open(HISTORYFILE, CFile::modeCreate|CFile::modeNoTruncate|CFile::modeReadWrite);
+	if(i==0) return false;//打开文件失败
 
 	CTime tm=CTime::GetCurrentTime(); 
 	CString s=tm.Format("%Y-%m-%d %H:%M:%S");//system time
 
-	CString temp, uid;
-	unsigned char buff[32];
-	int buff_len;
-
-	if (find_14443(buff, &buff_len) == 0){
-		uid.Empty();
-		for(int i = 0; i <buff_len; i++) {
-		  // 将获得的UID数据（1 byte）转为16进制
-	 		temp.Format(_T("%02x"), buff[i]);
-    		uid += temp;
-		}
-	}
+	CString uid;
+	StringHelper::GetUIDCStr(uid);//获取uid
 	s+=" UID:"+uid+"\r\n";
-	file.SeekToEnd();
+
 	CString tmp;
 	tmp.Format(_T("%d"),page);
 	s+=" page:"+tmp;
-	tmp.Format(_T("%d"),block);
+	tmp.Format(_T("%d"),block);//page and block
 	s+=" block:"+tmp;
+
+	//操作类型
 	switch(type){
 	case INITIAL:
 		s+=" initial ";
@@ -61,16 +55,21 @@ bool History::write(int page,int block,WriteType type,int amount)
 		s+=" deducate ";
 		break;
 	}
+
+	//金额
 	tmp.Format(_T("%d"),amount);
 	s+=tmp+" yuan\r\n";
+
+	file.SeekToEnd();
 	file.Write(s,s.GetLength());
 	file.Close();
+
 	return true;
 }
 CString History::read()
 {
 	CFile file;
-	int i = file.Open("history.txt", CFile::modeCreate|CFile::modeNoTruncate|CFile::modeRead);
+	int i = file.Open(HISTORYFILE, CFile::modeCreate|CFile::modeNoTruncate|CFile::modeRead);
 	if(i==0)
 	{
 		CString s="打开文件失败！";
@@ -80,9 +79,9 @@ CString History::read()
 	{
 		DWORD len=file.GetLength();   
 		char *cp = new char[len+1];
-		cp[len]=0;
+		cp[len]=0;//char数组借结尾标志
 		file.Read(cp,len);
-		CString s(cp);
+		CString s(cp);//用char数组初始化CString
 		delete []cp;
 		file.Close();
 		return s;

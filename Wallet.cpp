@@ -4,8 +4,11 @@
 #include "stdafx.h"
 #include "Demo2.h"
 #include "Wallet.h"
-#include "History.h"
+#include "History.h" 
+extern const CString HISTORYFILE;
+#include "StringHelper.h"
 #include "ZM124U.h"
+
 
 #include "Notice.h"
 extern Notice NOTICE;
@@ -53,18 +56,33 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CWallet message handlers
 
+//获取4个相同的参数
+void CWallet::GetParameters( int& page,int& block,unsigned char& pwdType,unsigned char* pwdCH)
+{
+	//获取page和block
+	CString tmp;
+	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
+	page = _ttoi(tmp);
+	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
+	block = _ttoi(tmp);
+	//获取page和block
+
+	//密码类型处理
+	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
+	else pwdType = 0x0B;
+	//密码类型处理
+
+	//获取密码
+	CString pwdCStr;
+	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
+	StringHelper::CString2UnsigedChar(pwdCStr,pwdCH);
+	//获取密码
+}
+
 //初始化函数
 void CWallet::OnBUTTONwalletInit() 
 {
 	// TODO: Add your control notification handler code here
-
-	//获取page和block
-	CString tmp;
-	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
-	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
-	int block = _ttoi(tmp);
-	//获取page和block
 
 	//输入检查
 	CString amountCStr;
@@ -84,40 +102,16 @@ void CWallet::OnBUTTONwalletInit()
 	}
 	//输入检查
 
-	//密码类型处理
+	int page=0;
+	int block=0;
 	unsigned char pwdType;
-	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
-	else pwdType = 0x0B;
-	//密码类型处理
-
-	//获取密码
-	CString pwdCStr;
-	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
-	pwdCStr.MakeUpper();
 	unsigned char pwdCH[12];
-
-	int len=pwdCStr.GetLength();
-
-	for(int i=0;i<len;i++)
-	{
-		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
-		else 
-		{
-			char x=pwdCStr[i];
-			pwdCH[i]=(unsigned char)atoi(&x);
-		}
-	}
-
-	for(int j=0;j<len/2;j++)
-	{
-		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
-	}
-	//获取密码
-
-	
+	GetParameters(page,block,pwdType,pwdCH);
 
 	int code = write_account(page, block, pwdType, pwdCH, amount);
+
 	NOTICE.notice(code);
+
 	if(code==0)
 	{
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包成功！");
@@ -142,43 +136,11 @@ void CWallet::OnBUTTONbalanceInquiry()
 {
 	// TODO: Add your control notification handler code here
 
-	//获取page和block
-	CString tmp;
-	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
-	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
-	int block = _ttoi(tmp);
-	//获取page和block
-
-	//密码类型处理
+	int page=0;
+	int block=0;
 	unsigned char pwdType;
-	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
-	else pwdType = 0x0B;
-	//密码类型处理
-
-	//获取密码
-	CString pwdCStr;
-	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
-	pwdCStr.MakeUpper();
 	unsigned char pwdCH[12];
-
-	int len=pwdCStr.GetLength();
-
-	for(int i=0;i<len;i++)
-	{
-		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
-		else 
-		{
-			char x=pwdCStr[i];
-			pwdCH[i]=(unsigned char)atoi(&x);
-		}
-	}
-
-	for(int j=0;j<len/2;j++)
-	{
-		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
-	}
-	//获取密码
+	GetParameters(page,block,pwdType,pwdCH);
 
 	long balance=0;
 
@@ -199,13 +161,6 @@ void CWallet::OnBUTTONbalanceInquiry()
 void CWallet::OnBUTTONrechange() 
 {
 	// TODO: Add your control notification handler code here
-	//获取page和block
-	CString tmp;
-	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
-	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
-	int block = _ttoi(tmp);
-	//获取page和block
 
 	//输入检查
 	CString amountCStr;
@@ -225,37 +180,11 @@ void CWallet::OnBUTTONrechange()
 	}
 	//输入检查
 
-	//密码类型处理
+	int page=0;
+	int block=0;
 	unsigned char pwdType;
-	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
-	else pwdType = 0x0B;
-	//密码类型处理
-
-	//获取密码
-	CString pwdCStr;
-	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
-	pwdCStr.MakeUpper();
 	unsigned char pwdCH[12];
-
-	int len=pwdCStr.GetLength();
-
-	for(int i=0;i<len;i++)
-	{
-		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
-		else 
-		{
-			char x=pwdCStr[i];
-			pwdCH[i]=(unsigned char)atoi(&x);
-		}
-	}
-
-	for(int j=0;j<len/2;j++)
-	{
-		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
-	}
-	//int asc_len;
-	//HexCString2UnsignedCharStar(pwdCStr, pwdCH, &asc_len);
-	//获取密码
+	GetParameters(page,block,pwdType,pwdCH);
 
 
 	int code = add_account(page, block, pwdType, pwdCH, amount);
@@ -273,13 +202,6 @@ void CWallet::OnBUTTONrechange()
 void CWallet::OnBUTTONdeduction() 
 {
 	// TODO: Add your control notification handler code here
-	//获取page和block
-	CString tmp;
-	GetDlgItem(IDC_COMBO_walletSector)->GetWindowText(tmp);
-	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_walletBlock)->GetWindowText(tmp);
-	int block = _ttoi(tmp);
-	//获取page和block
 
 	//输入检查
 	CString amountCStr;
@@ -299,39 +221,11 @@ void CWallet::OnBUTTONdeduction()
 	}
 	//输入检查
 
-
-
-	//密码类型处理
+	int page=0;
+	int block=0;
 	unsigned char pwdType;
-	if(((CButton *)GetDlgItem(IDC_RADIO1_wallet))->GetCheck()) pwdType = 0x0A;
-	else pwdType = 0x0B;
-	//密码类型处理
-
-	//获取密码
-	CString pwdCStr;
-	GetDlgItem(IDC_EDIT_key)->GetWindowText(pwdCStr);
-	pwdCStr.MakeUpper();
 	unsigned char pwdCH[12];
-
-	int len=pwdCStr.GetLength();
-
-	for(int i=0;i<len;i++)
-	{
-		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
-		else 
-		{
-			char x=pwdCStr[i];
-			pwdCH[i]=(unsigned char)atoi(&x);
-		}
-	}
-
-	for(int j=0;j<len/2;j++)
-	{
-		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
-	}
-	//int asc_len;
-	//HexCString2UnsignedCharStar(pwdCStr, pwdCH, &asc_len);
-	//获取密码
+	GetParameters(page,block,pwdType,pwdCH);
 
 	long balance=0;
 	read_account(page, block, pwdType, pwdCH, &balance);
@@ -356,7 +250,7 @@ void CWallet::OnBUTTONcleraRecord()
 {
 	// TODO: Add your control notification handler code here
 	GetDlgItem(IDC_EDIT_history)->SetWindowText("");
-	if(DeleteFile("history.txt")==0) NOTICE.notice("删除文件失败！");
+	if(DeleteFile(HISTORYFILE)==0) NOTICE.notice("删除文件失败！");//DeleteFile函数删除历史文件
 }
 
 void CWallet::OnBUTTONhistoryIquiry() 
@@ -365,3 +259,4 @@ void CWallet::OnBUTTONhistoryIquiry()
 	CString s=History::read();
 	GetDlgItem(IDC_EDIT_history)->SetWindowText(s);
 }
+

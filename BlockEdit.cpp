@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Demo2.h"
 #include "BlockEdit.h"
+#include "StringHelper.h"
 #include "ZM124U.h"
 
 #include "Notice.h"
@@ -55,20 +56,18 @@ void CBlockEdit::OnBUTTONdefualtKeyB()
 	GetDlgItem(IDC_EDIT_keyB)->SetWindowText("FFFFFFFFFFFF");
 }
 
-//读块
-void CBlockEdit::OnBUTTONreadBlock() 
+//获取4个相同的参数
+void CBlockEdit::GetParameters( int& page,int& block,unsigned char& pwdType,unsigned char* pwdCH)
 {
-	// TODO: Add your control notification handler code here
 	//获取page和block
 	CString tmp;
 	GetDlgItem(IDC_COMBO_Sector)->GetWindowText(tmp);
-	int page = _ttoi(tmp);
+	page = _ttoi(tmp);
 	GetDlgItem(IDC_COMBO_Block)->GetWindowText(tmp);
-	int block = _ttoi(tmp);
+	block = _ttoi(tmp);
 	//获取page和block
 
 	//密码类型处理
-	unsigned char pwdType;
 	if(((CButton *)GetDlgItem(IDC_RADIO1))->GetCheck()) pwdType = 0x0A;
 	else pwdType = 0x0B;
 	//密码类型处理
@@ -76,26 +75,19 @@ void CBlockEdit::OnBUTTONreadBlock()
 	//获取密码
 	CString pwdCStr;
 	GetDlgItem(IDC_EDIT_keyB)->GetWindowText(pwdCStr);
-	pwdCStr.MakeUpper();
-	unsigned char pwdCH[12];
-
-	int len=pwdCStr.GetLength();
-
-	for(int i=0;i<len;i++)
-	{
-		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
-		else 
-		{
-			char x=pwdCStr[i];
-			pwdCH[i]=(unsigned char)atoi(&x);
-		}
-	}
-
-	for(int j=0;j<(len+1)/2;j++)
-	{
-		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
-	}
+	StringHelper::CString2UnsigedChar(pwdCStr,pwdCH);
 	//获取密码
+}
+
+//读块
+void CBlockEdit::OnBUTTONreadBlock() 
+{
+	// TODO: Add your control notification handler code here
+	int page=0;
+	int block=0;
+	unsigned char pwdType;
+	unsigned char pwdCH[12];
+	GetParameters(page,block,pwdType,pwdCH);
 
 	unsigned char des_data[12];
 	int des_len=0;
@@ -149,44 +141,12 @@ void CBlockEdit::OnBUTTONreadBlock()
 void CBlockEdit::OnBUTTONreadPage() 
 {
 	// TODO: Add your control notification handler code here
-	//获取page和block
-	CString tmp;
-	GetDlgItem(IDC_COMBO_Sector)->GetWindowText(tmp);
-	int page = _ttoi(tmp);
-	//GetDlgItem(IDC_COMBO_Block)->GetWindowText(tmp);
-	int block = 0;
-	//获取page和block
-
-	//密码类型处理
+	
+	int page=0;
+	int block=0;
 	unsigned char pwdType;
-	if(((CButton *)GetDlgItem(IDC_RADIO1))->GetCheck()) pwdType = 0x0A;
-	else pwdType = 0x0B;
-	//密码类型处理
-
-	//获取密码
-	CString pwdCStr;
-	GetDlgItem(IDC_EDIT_keyB)->GetWindowText(pwdCStr);
-	pwdCStr.MakeUpper();
 	unsigned char pwdCH[12];
-
-	int len=pwdCStr.GetLength();
-
-	for(int i=0;i<len;i++)
-	{
-		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
-		else 
-		{
-			char x=pwdCStr[i];
-			pwdCH[i]=(unsigned char)atoi(&x);
-		}
-	}
-
-	for(int j=0;j<(len+1)/2;j++)
-	{
-		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
-	}
-	//获取密码
-
+	GetParameters(page,block,pwdType,pwdCH);
 	
 	for(block=0;block<4;block++)
 	{
@@ -198,11 +158,13 @@ void CBlockEdit::OnBUTTONreadPage()
 			NOTICE.notice(code);
 			return ;
 		}
+
 		CString str,temp;
 		for(int k = 0; k <des_len; k++) {
-	 		temp.Format(_T("%02x"), des_data[k]);
+	 		temp.Format(_T("%02x"), des_data[k]);//unsigned char 转 CString
     		str += temp;
 		}
+
 		switch(block)
 		{
 		case 0:
@@ -229,46 +191,12 @@ void CBlockEdit::OnBUTTONwriteBlock()
 {
 	// TODO: Add your control notification handler code here
 
-	//获取page和block
-	CString tmp;
-	GetDlgItem(IDC_COMBO_Sector)->GetWindowText(tmp);
-	int page = _ttoi(tmp);
-	GetDlgItem(IDC_COMBO_Block)->GetWindowText(tmp);
-	int block = _ttoi(tmp);
-	//获取page和block
-
-	//密码类型处理
+	int page=0;
+	int block=0;
 	unsigned char pwdType;
-	if(((CButton *)GetDlgItem(IDC_RADIO1))->GetCheck()) pwdType = 0x0A;
-	else pwdType = 0x0B;
-	//密码类型处理
-
-	//获取密码
-	CString pwdCStr;
-	GetDlgItem(IDC_EDIT_keyB)->GetWindowText(pwdCStr);
-	pwdCStr.MakeUpper();
 	unsigned char pwdCH[12];
+	GetParameters(page,block,pwdType,pwdCH);
 
-	int len=pwdCStr.GetLength();
-
-	for(int i=0;i<len;i++)
-	{
-		if(pwdCStr[i]>0x40) pwdCH[i]=(unsigned char)pwdCStr[i]-0x37;
-		else 
-		{
-			char x=pwdCStr[i];
-			pwdCH[i]=(unsigned char)atoi(&x);
-		}
-	}
-
-	for(int j=0;j<(len+1)/2;j++)
-	{
-		pwdCH[j]=(unsigned char)(pwdCH[2*j]<<4)+(unsigned char)(pwdCH[2*j+1]);
-	}
-	//获取密码
-
-
-	
 	//获取写入内容和长度
 	CString src_dataCStr;
 	switch(block)
@@ -316,24 +244,11 @@ void CBlockEdit::OnBUTTONwriteBlock()
 			src_data[b]=(unsigned char)(tmp[2*b]<<4)+(unsigned char)(tmp[2*b+1]);
 		}
 		src_len+=10;
-		for( ;b<6;b++) src_data[b]=' ';
+		//for( ;b<6;b++) src_data[b]=' ';
 	}
 	else
 	{
-		for(int ii=0;ii<len_src_CStr;ii++)
-		{
-			if(src_dataCStr[ii]>0x40) src_data[ii]=(unsigned char)src_dataCStr[ii]-0x37;
-			else 
-			{
-				char x=src_dataCStr[ii];
-				src_data[ii]=(unsigned char)atoi(&x);
-			}
-		}
-
-		for(int jj=0;jj<(len_src_CStr+1)/2;jj++)
-		{
-			src_data[jj]=(unsigned char)(src_data[2*jj]<<4)+(unsigned char)(src_data[2*jj+1]);
-		}
+		StringHelper::CString2UnsigedChar(src_dataCStr,src_data);
 	}
 	//获取写入内容和长度
 

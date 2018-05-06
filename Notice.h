@@ -1,11 +1,14 @@
 /*
 提示类
-在操作后弹出提示窗口
+在操作后弹出提示窗口，并在读卡器上的LED等显示相应的错误代码的绝对值
+
+提供跨源文件的全局变量NOTICE,免得到处定义对象
+
 只有两个函数
 void notice(int code);//根据函数返回值进行提示
 void notice(CString content,CString title="Error");//根据内容和标题进行提示
 
-提供跨源文件的全局变量NOTICE,免得到处定义对象
+
 */
 
 #if !defined(AFX_NOTICE_H__034EFE19_E11B_4F51_81BB_17E155A6210F__INCLUDED_)
@@ -52,7 +55,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-extern Notice NOTICE;
+extern Notice NOTICE;//声明全局变量
 
 /////////////////////////////////////////////////////////////////////////////
 

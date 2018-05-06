@@ -1,3 +1,17 @@
+/*
+钱包操作历史类
+将历史记录进行txt文件读写
+
+HISTORYFILE="history.txt" 为跨源文件共享字符串常量，作为历史文件名
+
+static bool write(int page,int block,WriteType type,int amount);
+page 扇区	block 块	WriteType 为枚举类型，对应初始化、充值、消费3个类型	amount 金额，
+此外还会记录操作时间和卡号
+
+static CString read();
+读取历史记录，返回CString
+*/
+
 #if !defined(AFX_HISTORY_H__C2A96995_EC9F_4973_A005_453834F70C6C__INCLUDED_)
 #define AFX_HISTORY_H__C2A96995_EC9F_4973_A005_453834F70C6C__INCLUDED_
 
@@ -14,13 +28,19 @@ enum WriteType
 	INITIAL=0,RECHARGE,DEDUCTION
 };
 
+extern const CString HISTORYFILE;//跨源文件共享字符串常量，作为历史文件名
+
 class History : public CWnd
 {
 // Construction
 public:
 	History();
 	static bool write(int page,int block,WriteType type,int amount);
+	//page 扇区	block 块	WriteType 为枚举类型，对应初始化、充值、消费3个类型	amount 金额，
+	//此外还会记录操作时间和卡号
+
 	static CString read();
+	//读取历史记录，返回CString
 
 // Attributes
 public:

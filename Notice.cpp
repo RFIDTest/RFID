@@ -5,7 +5,9 @@
 #include "Demo2.h"
 #include "Notice.h"
 #include "ZM124U.h"
-Notice NOTICE(0);
+
+Notice NOTICE(0);//定义全局变量
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -16,13 +18,13 @@ static char THIS_FILE[] = __FILE__;
 // Notice
 Notice::Notice(int i)
 {
-	i++;
+	//为了使用extern，所以需要区分声明与定义，如果有不带参数的构造函数的话，声明即定义了
+	//于是弄了一个带参的无用的构造函数
 }
 void Notice::notice(int code)
 {
 	char *data=NULL;
-	int data_len=2;
-	unsigned char  point=0x00;
+	//LED所用的函数参数
 	
 	switch(code){
 	case 0:
@@ -102,7 +104,7 @@ void Notice::notice(int code)
 		data = (char*)"10";
 		break;
 	}
-	LED(data, data_len, point) ;
+	LED(data, 2, 0x00);
 }
 
 void Notice::notice(CString content,CString title)
@@ -110,9 +112,7 @@ void Notice::notice(CString content,CString title)
 	MessageBox(content,title);
 
 	char *data=(char*)"16";//输入错误，自定义数字
-	int data_len=2;
-	unsigned char  point=0x00;
-	LED(data, data_len, point) ;
+	LED(data, 2, 0x00);
 }
 
 Notice::~Notice()
