@@ -7,6 +7,7 @@
 #include "ZM124U.h"
 
 #include "Notice.h"
+extern Notice NOTICE;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -99,7 +100,7 @@ void CBlockEdit::OnBUTTONreadBlock()
 	unsigned char des_data[12];
 	int des_len=0;
 	int code = read_block(page,block, pwdType, pwdCH,des_data, &des_len);
-	Notice n(code);
+	NOTICE.notice(code);
 	if(code!=0) return ;
 	CString str,temp;
 	for(int k = 0; k <des_len; k++) {
@@ -194,7 +195,7 @@ void CBlockEdit::OnBUTTONreadPage()
 		int code = read_block(page,block, pwdType, pwdCH,des_data, &des_len);
 		if(code!=0)
 		{
-			Notice notice(code);
+			NOTICE.notice(code);
 			return ;
 		}
 		CString str,temp;
@@ -337,5 +338,5 @@ void CBlockEdit::OnBUTTONwriteBlock()
 	//获取写入内容和长度
 
 	int code = write_block(block,page,pwdType,pwdCH,src_data,src_len); 
-	Notice n(code);
+	NOTICE.notice(code);
 }

@@ -8,6 +8,7 @@
 #include "ZM124U.h"
 
 #include "Notice.h"
+extern Notice NOTICE;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -70,14 +71,14 @@ void CWallet::OnBUTTONwalletInit()
 	GetDlgItem(IDC_EDIT_balance)->GetWindowText(amountCStr);
 	if(amountCStr.IsEmpty()) {
 		// 输入为空
-		Notice n("请输入初始化金额！","Warnning!");
+		NOTICE.notice("请输入初始化金额！","Warnning!");
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包失败！");
 		return;
 	}
 	long amount = _ttol(amountCStr);
 	if(amount < 0) {
 		// 输入小于0
-		Notice n("初始化金额不能小于0！","Warnning!");
+		NOTICE.notice("初始化金额不能小于0！","Warnning!");
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包失败！");
 		return;
 	}
@@ -116,12 +117,12 @@ void CWallet::OnBUTTONwalletInit()
 	
 
 	int code = write_account(page, block, pwdType, pwdCH, amount);
-	Notice n(code);
+	NOTICE.notice(code);
 	if(code==0)
 	{
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包成功！");
 		WriteType writetype=INITIAL;
-		if(History::write(page, block, writetype, amount)==false) Notice fileError("打开文件失败！");
+		if(History::write(page, block, writetype, amount)==false) NOTICE.notice("打开文件失败！");
 	}
 	else GetDlgItem(IDC_EDIT_state)->SetWindowText("初始化钱包失败！");
 	
@@ -182,7 +183,7 @@ void CWallet::OnBUTTONbalanceInquiry()
 	long balance=0;
 
 	int code = read_account(page, block, pwdType, pwdCH, &balance); 
-	Notice n(code);
+	NOTICE.notice(code);
 	CString balanceCStr;
 	balanceCStr.Format(_T("%d"), balance);
 	if(code==0) 
@@ -211,14 +212,14 @@ void CWallet::OnBUTTONrechange()
 	GetDlgItem(IDC_EDIT_rechange)->GetWindowText(amountCStr);
 	if(amountCStr.IsEmpty()) {
 		// 输入为空
-		Notice n("请输入充值金额！","Warnning!");
+		NOTICE.notice("请输入充值金额！","Warnning!");
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("充值失败！");
 		return;
 	}
 	long amount = _ttol(amountCStr);
 	if(amount < 0) {
 		// 输入小于0
-		Notice n("充值金额不能小于0！","Warnning!");
+		NOTICE.notice("充值金额不能小于0！","Warnning!");
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("充值失败！");
 		return;
 	}
@@ -258,12 +259,12 @@ void CWallet::OnBUTTONrechange()
 
 
 	int code = add_account(page, block, pwdType, pwdCH, amount);
-	Notice n(code);
+	NOTICE.notice(code);
 	if(code==0) 
 	{
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("充值成功！");
 		WriteType writetype=RECHARGE;
-		if(History::write(page, block, writetype, amount)==false) Notice fileError("打开文件失败！");
+		if(History::write(page, block, writetype, amount)==false) NOTICE.notice("打开文件失败！");
 	}
 	else GetDlgItem(IDC_EDIT_state)->SetWindowText("充值失败！");
 }
@@ -285,14 +286,14 @@ void CWallet::OnBUTTONdeduction()
 	GetDlgItem(IDC_EDIT_deduction)->GetWindowText(amountCStr);
 	if(amountCStr.IsEmpty()) {
 		// 输入为空
-		Notice n("请输入消费金额！","Warnning!");
+		NOTICE.notice("请输入消费金额！","Warnning!");
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("消费失败！");
 		return;
 	}
 	long amount = _ttol(amountCStr);
 	if(amount < 0) {
 		// 输入小于0
-		Notice n("消费金额不能小于0！","Warnning!");
+		NOTICE.notice("消费金额不能小于0！","Warnning!");
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("消费失败！");
 		return;
 	}
@@ -336,17 +337,17 @@ void CWallet::OnBUTTONdeduction()
 	read_account(page, block, pwdType, pwdCH, &balance);
 	if(balance<amount)
 	{
-		Notice n("余额不足，请充值。","Warnning!");
+		NOTICE.notice("余额不足，请充值。","Warnning!");
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("消费失败！");
 		return ;
 	}
 	int code = sub_account(page, block, pwdType, pwdCH, amount);
-	Notice notice(code);
+	NOTICE.notice(code);
 	if(code==0) 
 	{
 		GetDlgItem(IDC_EDIT_state)->SetWindowText("消费成功！");
 		WriteType writetype=DEDUCTION;
-		if(History::write(page, block, writetype, amount)==false) Notice fileError("打开文件失败！");
+		if(History::write(page, block, writetype, amount)==false) NOTICE.notice("打开文件失败！");
 	}
 	else GetDlgItem(IDC_EDIT_state)->SetWindowText("消费失败！");
 }
@@ -355,7 +356,7 @@ void CWallet::OnBUTTONcleraRecord()
 {
 	// TODO: Add your control notification handler code here
 	GetDlgItem(IDC_EDIT_history)->SetWindowText("");
-	if(DeleteFile("history.txt")==0) Notice deleteError("删除文件失败！");
+	if(DeleteFile("history.txt")==0) NOTICE.notice("删除文件失败！");
 }
 
 void CWallet::OnBUTTONhistoryIquiry() 

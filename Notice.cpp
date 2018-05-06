@@ -5,7 +5,7 @@
 #include "Demo2.h"
 #include "Notice.h"
 #include "ZM124U.h"
-
+Notice NOTICE(0);
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -14,8 +14,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // Notice
-
-Notice::Notice(int code)
+Notice::Notice(int i)
+{
+	i++;
+}
+void Notice::notice(int code)
 {
 	char *data=NULL;
 	int data_len=2;
@@ -102,9 +105,14 @@ Notice::Notice(int code)
 	LED(data, data_len, point) ;
 }
 
-Notice::Notice(CString content,CString title)
+void Notice::notice(CString content,CString title)
 {
 	MessageBox(content,title);
+
+	char *data=(char*)"16";//输入错误，自定义数字
+	int data_len=2;
+	unsigned char  point=0x00;
+	LED(data, data_len, point) ;
 }
 
 Notice::~Notice()
