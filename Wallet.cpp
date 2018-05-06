@@ -355,6 +355,7 @@ void CWallet::OnBUTTONcleraRecord()
 {
 	// TODO: Add your control notification handler code here
 	GetDlgItem(IDC_EDIT_history)->SetWindowText("");
+	if(DeleteFile("history.txt")==0) Notice deleteError("É¾³ýÎÄ¼þÊ§°Ü£¡");
 }
 
 void CWallet::OnBUTTONhistoryIquiry() 

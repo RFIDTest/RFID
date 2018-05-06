@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "ZM124U.h"
 #include "Demo2.h"
 #include "History.h"
 
@@ -27,10 +28,26 @@ bool History::write(int page,int block,WriteType type,int amount)
 	int i = file.Open("history.txt", CFile::modeCreate|CFile::modeNoTruncate|CFile::modeReadWrite);
 	if(i==0) return false;
 
+	CTime tm=CTime::GetCurrentTime(); 
+	CString s=tm.Format("%Y-%m-%d %H:%M:%S");//system time
+
+	CString temp, uid;
+	unsigned char buff[32];
+	int buff_len;
+
+	if (find_14443(buff, &buff_len) == 0){
+		uid.Empty();
+		for(int i = 0; i <buff_len; i++) {
+		  // 将获得的UID数据（1 byte）转为16进制
+	 		temp.Format(_T("%02x"), buff[i]);
+    		uid += temp;
+		}
+	}
+	s+=" UID:"+uid+"\r\n";
 	file.SeekToEnd();
 	CString tmp;
 	tmp.Format(_T("%d"),page);
-	CString s="page:"+tmp;
+	s+=" page:"+tmp;
 	tmp.Format(_T("%d"),block);
 	s+=" block:"+tmp;
 	switch(type){

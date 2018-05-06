@@ -269,7 +269,6 @@ void CBlockEdit::OnBUTTONwriteBlock()
 
 	
 	//获取写入内容和长度
-	
 	CString src_dataCStr;
 	switch(block)
 	{
@@ -295,14 +294,7 @@ void CBlockEdit::OnBUTTONwriteBlock()
 	int src_len=(len_src_CStr+1)/2;
 	if(block==3)
 	{
-		unsigned char des_data[16];
-		int des_len=0;
-		int code = read_block(page,block, pwdType, pwdCH,des_data, &des_len);
-		Notice c(code);
-		code = write_block(block,page,pwdType,pwdCH,des_data,des_len);
-		Notice d(code);
 
-/*		unsigned char des_data[16];
 		int des_len=0;	
 		read_block(page,block, pwdType, pwdCH,src_data, &des_len);
 		
@@ -316,11 +308,14 @@ void CBlockEdit::OnBUTTONwriteBlock()
 				tmp[a]=(unsigned char)atoi(&y);
 			}
 		}
-		for(int b=0;b<src_len;b++)
+
+		int b=0;
+		for( ;b<src_len;b++)
 		{
-			src_data[10+b]=(unsigned char)(tmp[2*b]<<4)+(unsigned char)(tmp[2*b+1]);
+			src_data[b]=(unsigned char)(tmp[2*b]<<4)+(unsigned char)(tmp[2*b+1]);
 		}
-		src_len+=10;*/
+		src_len+=10;
+		for( ;b<6;b++) src_data[b]=' ';
 	}
 	else
 	{
@@ -340,6 +335,7 @@ void CBlockEdit::OnBUTTONwriteBlock()
 		}
 	}
 	//获取写入内容和长度
-	//int code = write_block(block,page,pwdType,pwdCH,src_data,src_len); 
-	//Notice n(code);
+
+	int code = write_block(block,page,pwdType,pwdCH,src_data,src_len); 
+	Notice n(code);
 }

@@ -1,2 +1,2 @@
-page:1 block:1 initial 12 yuan
-page:2 block:1 initial 12 yuan
+page1block2initialFFpage1block2initialFpage1 block1 initial11yuan
+page1 block3 initial113yuan
