@@ -5,6 +5,7 @@
 #include "Demo2.h"
 #include "ReadCard.h"
 #include "StringHelper.h"
+#include "MySqlHelper.h"
 #include "ZM124U.h"
 
 #ifdef _DEBUG
@@ -16,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CReadCard dialog
 
-
+MySqlHelper test;
 CReadCard::CReadCard(CWnd* pParent /*=NULL*/)
 	: CDialog(CReadCard::IDD, pParent)
 {
@@ -47,7 +48,7 @@ END_MESSAGE_MAP()
 
 void CReadCard::OnButton1() 
 {
-
+	test.Connect();
 	// TODO: Add your control notification handler code here
     if(IDD_PowerOn() == IFD_OK) {
         // 更新状态栏，成功
@@ -64,7 +65,7 @@ void CReadCard::OnButton1()
 void CReadCard::OnButton2() 
 {
 	// TODO: Add your control notification handler code here
-	
+	test.Close();
 	CString uid;
 	
 	if (StringHelper::GetUIDCStr(uid))

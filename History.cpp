@@ -27,8 +27,8 @@ History::~History()
 bool History::write(int page,int block,WriteType type,int amount)
 {
 	CFile file;
-	int i = file.Open(HISTORYFILE, CFile::modeCreate|CFile::modeNoTruncate|CFile::modeReadWrite);
-	if(i==0) return false;//打开文件失败
+	if(file.Open(HISTORYFILE, CFile::modeCreate|CFile::modeNoTruncate|CFile::modeReadWrite) == 0) 
+		return false;//打开文件失败
 
 	CTime tm=CTime::GetCurrentTime(); 
 	CString s=tm.Format("%Y-%m-%d %H:%M:%S");//system time
@@ -69,8 +69,7 @@ bool History::write(int page,int block,WriteType type,int amount)
 CString History::read()
 {
 	CFile file;
-	int i = file.Open(HISTORYFILE, CFile::modeCreate|CFile::modeNoTruncate|CFile::modeRead);
-	if(i==0)
+	if(file.Open(HISTORYFILE, CFile::modeCreate|CFile::modeNoTruncate|CFile::modeRead)==0)
 	{
 		CString s="打开文件失败！";
 		return s;

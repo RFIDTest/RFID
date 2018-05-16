@@ -111,6 +111,10 @@ SOURCE=.\History.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MySqlHelper.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notice.cpp
 # End Source File
 # Begin Source File
@@ -157,6 +161,10 @@ SOURCE=.\Demo2Dlg.h
 # Begin Source File
 
 SOURCE=.\History.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MySqlHelper.h
 # End Source File
 # Begin Source File
 

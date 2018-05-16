@@ -92,6 +92,7 @@ void CBlockEdit::OnBUTTONreadBlock()
 	unsigned char des_data[12];
 	int des_len=0;
 	int code = read_block(page,block, pwdType, pwdCH,des_data, &des_len);
+
 	NOTICE.notice(code);
 	if(code!=0) return ;
 	CString str,temp;
@@ -251,7 +252,6 @@ void CBlockEdit::OnBUTTONwriteBlock()
 		StringHelper::CString2UnsigedChar(src_dataCStr,src_data);
 	}
 	//获取写入内容和长度
-
 	int code = write_block(block,page,pwdType,pwdCH,src_data,src_len); 
 	NOTICE.notice(code);
 }
