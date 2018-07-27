@@ -111,6 +111,10 @@ SOURCE=.\History.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MySqlHelper.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notice.cpp
 # End Source File
 # Begin Source File
@@ -125,6 +129,10 @@ SOURCE=.\ReadCard.cpp
 
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringHelper.cpp
 # End Source File
 # Begin Source File
 
@@ -156,6 +164,10 @@ SOURCE=.\History.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\MySqlHelper.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notice.h
 # End Source File
 # Begin Source File
@@ -169,6 +181,10 @@ SOURCE=.\Resource.h
 # Begin Source File
 
 SOURCE=.\StdAfx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringHelper.h
 # End Source File
 # Begin Source File
 

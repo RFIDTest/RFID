@@ -6,29 +6,32 @@
 --------------------Configuration: Demo2 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPAAFA.tmp" with contents
+Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPE85C.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/Demo2.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\Users\24707\Desktop\RFID\RFID\BlockEdit.cpp"
+"C:\Users\24707\Desktop\RFID\RFID\MySqlHelper.cpp"
 ]
-Creating command line "cl.exe @C:\Users\24707\AppData\Local\Temp\RSPAAFA.tmp" 
-Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPAAFB.tmp" with contents
+Creating command line "cl.exe @C:\Users\24707\AppData\Local\Temp\RSPE85C.tmp" 
+Creating temporary file "C:\Users\24707\AppData\Local\Temp\RSPE85D.tmp" with contents
 [
 ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Demo2.pdb" /debug /machine:I386 /out:"Debug/Demo2.exe" /pdbtype:sept /libpath:"./libs" 
 .\Debug\BlockEdit.obj
 .\Debug\Demo2.obj
 .\Debug\Demo2Dlg.obj
 .\Debug\History.obj
+.\Debug\MySqlHelper.obj
 .\Debug\Notice.obj
 .\Debug\ReadCard.obj
 .\Debug\StdAfx.obj
+.\Debug\StringHelper.obj
 .\Debug\Wallet.obj
 .\Debug\Demo2.res
 ]
-Creating command line "link.exe @C:\Users\24707\AppData\Local\Temp\RSPAAFB.tmp"
+Creating command line "link.exe @C:\Users\24707\AppData\Local\Temp\RSPE85D.tmp"
 <h3>Output Window</h3>
 Compiling...
-BlockEdit.cpp
+MySqlHelper.cpp
+c:\users\24707\desktop\rfid\rfid\debug\msado15.tlh(476) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
 Linking...
 
 

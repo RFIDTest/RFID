@@ -15,7 +15,7 @@ class CWallet : public CDialog
 // Construction
 public:
 	CWallet(CWnd* pParent = NULL);   // standard constructor
-
+	void GetParameters( int& page,int& block,unsigned char& pwdType,unsigned char* pwdCH);
 // Dialog Data
 	//{{AFX_DATA(CWallet)
 	enum { IDD = IDD_Wallet };
